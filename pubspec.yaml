@@ -39,6 +39,10 @@ dependencies:
   lab_clinicas_core:
     path: ../lab_clinicas_core
   asyncstate: ^2.1.1-dev.1
+  dio: ^5.4.0
+  shared_preferences: ^2.2.2
+  signals_flutter: ^3.0.0
+  validatorless: ^1.2.3
 
 dev_dependencies:
   flutter_test:
