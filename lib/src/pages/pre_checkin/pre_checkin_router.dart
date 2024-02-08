@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
+import 'package:lab_clinicas_adm/src/pages/pre_checkin/pre_checkin_controller.dart';
 import 'package:lab_clinicas_adm/src/pages/pre_checkin/pre_checkin_page.dart';
 
 class PreCheckinRouter extends FlutterGetItPageRouter {
@@ -8,14 +9,13 @@ class PreCheckinRouter extends FlutterGetItPageRouter {
 
   @override
   List<Bind<Object>> get bindings => [
-
+    Bind.lazySingleton((i) => PreCheckinController()),
   ];
 
   @override
   String get routeName => "/pre-checkin";
 
   @override
-  // TODO: implement view
   WidgetBuilder get view => (_) => const PreCheckinPage();
   
 }
