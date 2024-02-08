@@ -12,12 +12,18 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with MessageViewMixin {
 
   final _formKey = GlobalKey<FormState>();
   final _deskNumberEC = TextEditingController();
 
   final _controller = Injector.get<HomeController>();
+
+  @override
+  void initState() {
+    messageListener(_controller);
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -88,6 +94,7 @@ class _HomePageState extends State<HomePage> {
 
                       if(valid) {
 
+                        _controller.startService(int.parse(_deskNumberEC.text));
                       }
                     }, 
                     child: const Text("CHAMAR PRÓXIMO PACIENTE"),
