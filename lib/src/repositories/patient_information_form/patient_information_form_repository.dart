@@ -71,7 +71,7 @@ class PatientInformationFormRepository implements IPatientInformationFormReposit
   }
 
   Future<Map<String, dynamic>> _getPatient(String id) async {
-    final Response(:data) = await _restClient.auth.get("/patient/$id");
+    final Response(:data) = await _restClient.auth.get("/patients/$id");
     return data;
   }
 }
