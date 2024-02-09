@@ -22,12 +22,20 @@ class _CheckinPageState extends State<CheckinPage> with MessageViewMixin {
   @override
   void initState() {
     messageListener(_controller);
+
+    effect(() {
+
+      if(_controller.endProcess.value) {
+        Navigator.of(context).pushReplacementNamed("/end-checkin");
+      }
+    });
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    final PatientInformationFormModel(:password, :patient) = _controller.informationForm.watch(context)!;
+    final PatientInformationFormModel(:password, :patient, :medicalOrders, :healthInsuranceCard) = _controller.informationForm.watch(context)!;
 
     final sizeOf = MediaQuery.sizeOf(context);
 
@@ -169,10 +177,17 @@ class _CheckinPageState extends State<CheckinPage> with MessageViewMixin {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    CheckinImageLink(label: "Carteirinha"),
+                    CheckinImageLink(
+                      label: "Carteirinha",
+                      image: healthInsuranceCard,
+                    ),
                     Column(
                       children: [
-                        CheckinImageLink(label: "Pedido médico")
+                        for(final (index, medicalOrder) in medicalOrders.indexed)
+                          CheckinImageLink(
+                            label: "Pedido médico ${index + 1}",
+                            image: medicalOrder,
+                          ),
                       ],
                     ),
                   ],
@@ -185,7 +200,7 @@ class _CheckinPageState extends State<CheckinPage> with MessageViewMixin {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: () {
-                      Navigator.of(context).pushReplacementNamed("/checkin", arguments: _controller.informationForm);
+                      _controller.endCheckin();
                     },
                     child: const Text("FINALIZAR ATENDIMENTO"),
                   ),

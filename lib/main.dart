@@ -11,6 +11,8 @@ import 'package:lab_clinicas_adm/src/pages/pre_checkin/pre_checkin_router.dart';
 import 'package:lab_clinicas_adm/src/pages/splash/splash_page.dart';
 import 'package:lab_clinicas_core/lab_clinicas_core.dart';
 
+import 'src/pages/end_checkin/end_checkin_router.dart';
+
 void main() {
   runZonedGuarded(() async {
 
@@ -42,6 +44,7 @@ class LabClinicasAdmApp extends StatelessWidget {
         HomeRouter(),
         PreCheckinRouter(),
         CheckinRouter(),
+        EndCheckinRouter(),
       ],
       // modules: [
       //   AuthModule(),
