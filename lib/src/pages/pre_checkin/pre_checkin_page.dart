@@ -1,12 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_getit/flutter_getit.dart';
+import 'package:lab_clinicas_adm/src/pages/pre_checkin/pre_checkin_controller.dart';
 import 'package:lab_clinicas_adm/src/shared/widgets/data_item_widget.dart';
 import 'package:lab_clinicas_core/lab_clinicas_core.dart';
+import 'package:signals_flutter/signals_flutter.dart';
 
-class PreCheckinPage extends StatelessWidget {
+import '../../models/patient_information_form_model.dart';
+
+class PreCheckinPage extends StatefulWidget {
   const PreCheckinPage({super.key});
 
   @override
+  State<PreCheckinPage> createState() => _PreCheckinPageState();
+}
+
+class _PreCheckinPageState extends State<PreCheckinPage> with MessageViewMixin {
+
+  final _controller = Injector.get<PreCheckinController>();
+
+  @override
+  void initState() {
+    messageListener(_controller);
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+
+    final PatientInformationFormModel(:password, :patient) = _controller.informationForm.watch(context)!;
 
     final sizeOf = MediaQuery.sizeOf(context);
 
@@ -53,10 +74,10 @@ class PreCheckinPage extends StatelessWidget {
                     color: LabClinicasTheme.orangeColor,
                     borderRadius: BorderRadius.circular(16),
                   ),
-                  child: const Text(
-                    "selfServiceController.password",
+                  child: Text(
+                    password,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.bold,
                       color: Colors.white,
@@ -66,45 +87,45 @@ class PreCheckinPage extends StatelessWidget {
                 const SizedBox(
                   height: 48,
                 ),
-                const DataItemWidget(
+                DataItemWidget(
                   label: "Nome do paciente", 
-                  value: "value",
-                  padding: EdgeInsets.only(bottom: 24),
+                  value: patient.name,
+                  padding: const EdgeInsets.only(bottom: 24),
                 ),
-                const DataItemWidget(
+                DataItemWidget(
                   label: "Email", 
-                  value: "value",
-                  padding: EdgeInsets.only(bottom: 24),
+                  value: patient.email,
+                  padding: const EdgeInsets.only(bottom: 24),
                 ),
-                const DataItemWidget(
+                DataItemWidget(
                   label: "Telefone de contato", 
-                  value: "value",
-                  padding: EdgeInsets.only(bottom: 24),
+                  value: patient.phoneNumber,
+                  padding: const EdgeInsets.only(bottom: 24),
                 ),
-                const DataItemWidget(
+                DataItemWidget(
                   label: "CPF", 
-                  value: "value",
-                  padding: EdgeInsets.only(bottom: 24),
+                  value: patient.document,
+                  padding: const EdgeInsets.only(bottom: 24),
                 ),
-                const DataItemWidget(
+                DataItemWidget(
                   label: "CEP", 
-                  value: "value",
-                  padding: EdgeInsets.only(bottom: 24),
+                  value: patient.address.cep,
+                  padding: const EdgeInsets.only(bottom: 24),
                 ),
-                const DataItemWidget(
+                DataItemWidget(
                   label: "Endereço", 
-                  value: "value",
-                  padding: EdgeInsets.only(bottom: 24),
+                  value: "${patient.address.streetAddress}, ${patient.address.number} ${patient.address.addressComplement}, ${patient.address.district}, ${patient.address.city} - ${patient.address.state}",
+                  padding: const EdgeInsets.only(bottom: 24),
                 ),
-                const DataItemWidget(
+                DataItemWidget(
                   label: "Responsável", 
-                  value: "value",
-                  padding: EdgeInsets.only(bottom: 24),
+                  value: patient.guardian,
+                  padding: const EdgeInsets.only(bottom: 24),
                 ),
-                const DataItemWidget(
+                DataItemWidget(
                   label: "Documento de identidade", 
-                  value: "value",
-                  padding: EdgeInsets.only(bottom: 24),
+                  value: patient.guardianIdentificationNumber,
+                  padding: const EdgeInsets.only(bottom: 24),
                 ),
                 const SizedBox(
                   height: 48,
@@ -115,7 +136,9 @@ class PreCheckinPage extends StatelessWidget {
                       child: SizedBox(
                         height: 48,
                         child: OutlinedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            _controller.next();
+                          },
                           child: const Text("CHAMAR OUTRA SENHA"),
                         ),
                       ),
@@ -127,7 +150,9 @@ class PreCheckinPage extends StatelessWidget {
                       child: SizedBox(
                         height: 48,
                         child: ElevatedButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.of(context).pushReplacementNamed("/checkin", arguments: _controller.informationForm);
+                          },
                           child: const Text("ATENDER"),
                         ),
                       ),

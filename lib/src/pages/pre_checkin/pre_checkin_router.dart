@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
+import 'package:lab_clinicas_adm/src/models/patient_information_form_model.dart';
 import 'package:lab_clinicas_adm/src/pages/pre_checkin/pre_checkin_controller.dart';
 import 'package:lab_clinicas_adm/src/pages/pre_checkin/pre_checkin_page.dart';
 
@@ -9,13 +10,22 @@ class PreCheckinRouter extends FlutterGetItPageRouter {
 
   @override
   List<Bind<Object>> get bindings => [
-    Bind.lazySingleton((i) => PreCheckinController()),
+    Bind.lazySingleton((i) => PreCheckinController(
+      callNextPatientService: i(),
+    )),
   ];
 
   @override
   String get routeName => "/pre-checkin";
 
   @override
-  WidgetBuilder get view => (_) => const PreCheckinPage();
+  WidgetBuilder get view => (context) {
+
+    final form = ModalRoute.of(context)!.settings.arguments as PatientInformationFormModel;
+
+    context.get<PreCheckinController>().informationForm.value = form;
+
+    return const PreCheckinPage();
+  };
   
 }
