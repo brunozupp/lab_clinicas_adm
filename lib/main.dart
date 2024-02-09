@@ -4,6 +4,7 @@ import 'dart:developer';
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
 import 'package:lab_clinicas_adm/src/binding/lab_clinicias_application_binding.dart';
+import 'package:lab_clinicas_adm/src/pages/checkin/checkin_router.dart';
 import 'package:lab_clinicas_adm/src/pages/home/home_router.dart';
 import 'package:lab_clinicas_adm/src/pages/login/login_router.dart';
 import 'package:lab_clinicas_adm/src/pages/pre_checkin/pre_checkin_router.dart';
@@ -40,6 +41,7 @@ class LabClinicasAdmApp extends StatelessWidget {
         LoginRouter(),
         HomeRouter(),
         PreCheckinRouter(),
+        CheckinRouter(),
       ],
       // modules: [
       //   AuthModule(),
