@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_getit/flutter_getit.dart';
+import 'package:lab_clinicas_adm/src/pages/end_checkin/end_checkin_controller.dart';
 import 'package:lab_clinicas_adm/src/pages/end_checkin/end_checkin_page.dart';
 
 class EndCheckinRouter extends FlutterGetItPageRouter {
@@ -8,7 +9,7 @@ class EndCheckinRouter extends FlutterGetItPageRouter {
 
   @override
   List<Bind<Object>> get bindings => [
-
+    Bind.lazySingleton((i) => EndCheckinController(callNextPatientService: i()))
   ];
 
   @override
