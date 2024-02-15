@@ -23,7 +23,7 @@ class AttendantDeskAssignmentRepository implements IAttendantDeskAssignmentRepos
         case Left(value: final excepiton):
           return Left(excepiton);
         case Right():
-          await _restClient.auth.post("attendantDeskAssignment", data: {
+          await _restClient.auth.post("/attendantDeskAssignment", data: {
             "user_id": "#userAuthRef",
             "desk_number": deskNumber,
             "date_created": DateTime.now().toIso8601String(),
